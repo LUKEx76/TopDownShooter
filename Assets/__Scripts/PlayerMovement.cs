@@ -22,9 +22,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        float vMovement = joystick.Vertical;
-        float hMovement = joystick.Horizontal;
-        rb.velocity = new Vector2(hMovement * speed, vMovement * speed);
+        if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+        {
+            Vector2 lookDir = new Vector2(joystick.Horizontal, joystick.Vertical);
+            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+
+            rb.rotation = angle;
+        }
+
+        rb.velocity = new Vector2(joystick.Horizontal * speed, joystick.Vertical * speed);
     }
 
     public void Respawn()
