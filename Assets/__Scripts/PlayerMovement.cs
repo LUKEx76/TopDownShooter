@@ -9,7 +9,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float speed = 3f;
 
-    [SerializeField] private Joystick joystick;
+    [SerializeField] private Joystick moveStick;
+
+    [SerializeField] private Joystick aimStick;
 
     [SerializeField] private Vector3 startPos;
 
@@ -19,18 +21,33 @@ public class PlayerMovement : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
     }
 
+    //Migrate rotation from Dual Sick in Movement Script
+
 
     void Update()
     {
-        if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+        Vector2 lookDir;
+        float angle;
+        if (aimStick.gameObject.activeSelf)   //If AimStick exists make Player rotate according to AimStick
         {
-            Vector2 lookDir = new Vector2(joystick.Horizontal, joystick.Vertical);
-            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+            if (aimStick.Horizontal != 0f || aimStick.Vertical != 0f)
+            {
+
+                lookDir = new Vector2(aimStick.Horizontal, aimStick.Vertical);
+                angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+
+                rb.rotation = angle;
+            }
+        }
+        else if (moveStick.Horizontal != 0f || moveStick.Vertical != 0f)
+        {
+            lookDir = new Vector2(moveStick.Horizontal, moveStick.Vertical);
+            angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
 
             rb.rotation = angle;
         }
 
-        rb.velocity = new Vector2(joystick.Horizontal * speed, joystick.Vertical * speed);
+        rb.velocity = new Vector2(moveStick.Horizontal * speed, moveStick.Vertical * speed);
     }
 
     public void Respawn()

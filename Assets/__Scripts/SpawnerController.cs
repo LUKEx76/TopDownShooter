@@ -6,6 +6,8 @@ public class SpawnerController : MonoBehaviour
 {
     [SerializeField] private Enemy enemyPrefab;
 
+    [SerializeField] private GameObject enemyParent;
+
     [SerializeField] private float spawnIntervall = 2f;
 
     private float cooldown;
@@ -29,8 +31,13 @@ public class SpawnerController : MonoBehaviour
             Enemy enemy = Instantiate(enemyPrefab);
             enemy.transform.position = this.transform.position;
 
+            if (enemyParent)
+            {
+                enemy.transform.parent = enemyParent.transform;
+            }
+
             Rigidbody2D erb = enemy.GetComponent<Rigidbody2D>();
-            erb.velocity = randomDir.normalized * enemy.GetSpeed();
+            erb.velocity = randomDir.normalized * enemy.EnemySpeed;
         }
 
     }

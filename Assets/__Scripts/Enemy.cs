@@ -8,27 +8,12 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float enemySpeed = 5f;
 
-    [SerializeField] private float liveTime = 10f;
+    public float EnemySpeed { get { return enemySpeed; } }
 
-    private float age;
 
-    public float GetSpeed()
+    private void OnBecameInvisible()
     {
-        return enemySpeed;
-    }
-
-    void Start()
-    {
-        age = liveTime;
-    }
-
-    void Update()
-    {
-        age -= Time.deltaTime;
-        if (age <= 0)
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D whatHitMe)
