@@ -2,80 +2,71 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class WeaponController : MonoBehaviour
 {
-    [SerializeField] private Bullet bulletPrefab;
-
+    //PRIVATE FIELDS
+    [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private float firingRate = 0.25f;
-
     [SerializeField] private Joystick aimStick;
 
-    [SerializeField] private GameObject bulletParent;
+    private Transform gun;
+    private GameObject bulletParent;
+    private Rigidbody2D rigidbody;
+    private Coroutine firingCoroutine;
+    private bool firing;
 
-    private float fireIn;
-
-    private bool firing = false;
-
-    private Rigidbody2D rb;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        fireIn = firingRate;
+        firing = false;
+        gun = transform.Find("Gun");
+        rigidbody = GetComponent<Rigidbody2D>();
+        bulletParent = GameObject.Find("BulletParent");
+        if (!bulletParent)
+        {
+            bulletParent = new GameObject("BulletParent");
+        }
     }
 
 
     void Update()
     {
-        fireIn -= Time.deltaTime;
-
-        //If DualStick Controlls are selected
-        if (aimStick.gameObject.activeSelf && (aimStick.Vertical != 0f || aimStick.Horizontal != 0f))
+        if (aimStick.Vertical != 0f || aimStick.Horizontal != 0f)
         {
-            FireBullet();
-        }
-
-        if (firing)
-        {
-            FireBullet();
-        }
-    }
-
-    public void onPress()
-    {
-        FireBullet();
-        firing = true;
-    }
-
-    public void onRelease()
-    {
-        firing = false;
-    }
-
-    public void FireBullet()
-    {
-        if (fireIn <= 0)
-        {
-            fireIn = firingRate;
-
-            //Instantiate Bullet Prefab
-            Bullet bullet = Instantiate(bulletPrefab);
-            bullet.transform.position = this.transform.position;
-
-            if (bulletParent)
+            rigidbody.rotation = Mathf.Atan2(aimStick.Vertical, aimStick.Horizontal) * Mathf.Rad2Deg - 90f;
+            if (!firing)
             {
-                bullet.transform.parent = bulletParent.transform;
+                firingCoroutine = StartCoroutine(FireCoroutine());
+                firing = true;
             }
+        }
+        else if (firingCoroutine != null && firing)
+        {
+            StopCoroutine(firingCoroutine);
+            firing = false;
+        }
+    }
 
-            //Get RB of Bullet
-            Rigidbody2D rbb = bullet.GetComponent<Rigidbody2D>();
+
+    private IEnumerator FireCoroutine()
+    {
+        while (true)
+        {
+            //Instantiate Projectile Prefab
+            Projectile projectile = Instantiate(projectilePrefab, bulletParent.transform);
+            projectile.transform.position = gun.transform.position;
+            projectile.transform.rotation = gun.transform.rotation;
+
+            //Get RB of Projectile
+            Rigidbody2D rbProjectile = projectile.GetComponent<Rigidbody2D>();
 
             //Get Vector from Shoot Joystick
-            Vector2 shootDir = Vector2fromAngle(rb.rotation);
-            rbb.velocity = shootDir.normalized * bullet.BulletSpeed;
-
-
+            Vector2 shootDir = Vector2fromAngle(rigidbody.rotation);
+            rbProjectile.velocity = shootDir.normalized * projectile.Speed;
+            yield return new WaitForSeconds(firingRate);
         }
+
     }
 
     private Vector2 Vector2fromAngle(float angle)
@@ -84,4 +75,5 @@ public class WeaponController : MonoBehaviour
         angle *= Mathf.Deg2Rad;
         return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
     }
+
 }

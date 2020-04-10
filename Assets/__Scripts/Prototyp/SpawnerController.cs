@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerController : MonoBehaviour
+public class PrototypSpawnerController : MonoBehaviour
 {
-    [SerializeField] private Enemy enemyPrefab;
+    [SerializeField] private PrototypEnemy enemyPrefab;
 
     [SerializeField] private GameObject enemyParent;
 
@@ -28,7 +28,7 @@ public class SpawnerController : MonoBehaviour
             cooldown = spawnIntervall;
             Vector2 randomDir = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
 
-            Enemy enemy = Instantiate(enemyPrefab);
+            PrototypEnemy enemy = Instantiate(enemyPrefab);
             enemy.transform.position = this.transform.position;
 
             if (enemyParent)

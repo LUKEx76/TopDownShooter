@@ -5,53 +5,60 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    //PRIVATE PROPERTIES
-    private Rigidbody2D rb;
-    [SerializeField] private float speed = 3f;
+    PlayerInputActions inputActions;
 
-    [SerializeField] private Joystick moveStick;
+    [SerializeField] private FixedJoystick moveStick;
 
-    [SerializeField] private Joystick aimStick;
+    private Rigidbody2D rigidbody;
 
-    [SerializeField] private Vector3 startPos;
+    [SerializeField] private float moveSpeed = 3f;
 
+    private Vector2 movementInput;
+
+    private bool stopMoving;
+
+    void Awake()
+    {
+        movementInput = new Vector2();
+        inputActions = new PlayerInputActions();
+        inputActions.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
+    }
 
     void Start()
     {
-        rb = this.GetComponent<Rigidbody2D>();
+        rigidbody = GetComponent<Rigidbody2D>();
+        stopMoving = true;
     }
 
-    //Migrate rotation from Dual Sick in Movement Script
 
-
-    void Update()
+    void FixedUpdate()
     {
-        Vector2 lookDir;
-        float angle;
-        if (aimStick.gameObject.activeSelf)   //If AimStick exists make Player rotate according to AimStick
+        //Work around to get Mouse and Joystick Movement
+        if (moveStick.Horizontal != 0 && moveStick.Vertical != 0)
         {
-            if (aimStick.Horizontal != 0f || aimStick.Vertical != 0f)
-            {
-
-                lookDir = new Vector2(aimStick.Horizontal, aimStick.Vertical);
-                angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-
-                rb.rotation = angle;
-            }
+            stopMoving = true;
+            movementInput = new Vector2(moveStick.Horizontal, moveStick.Vertical);
         }
-        else if (moveStick.Horizontal != 0f || moveStick.Vertical != 0f)
+        else if (stopMoving)
         {
-            lookDir = new Vector2(moveStick.Horizontal, moveStick.Vertical);
-            angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-
-            rb.rotation = angle;
+            movementInput = Vector2.zero;
+            stopMoving = false;
         }
-
-        rb.velocity = new Vector2(moveStick.Horizontal * speed, moveStick.Vertical * speed);
+        Move();
     }
 
-    public void Respawn()
+    void Move()
     {
-        transform.position = startPos;
+        rigidbody.MovePosition(rigidbody.position + movementInput * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void DisEnable()
+    {
+        inputActions.Disable();
     }
 }

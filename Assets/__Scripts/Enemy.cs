@@ -2,41 +2,57 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(PolygonCollider2D))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float enemySpeed = 5f;
+    //Parent Class for all Enemies
+    //Holds values for Score-, Healthpoints
+    //Handels Hit Detection
+    //Publishes Events for Sound- and GameController
 
-    public float EnemySpeed { get { return enemySpeed; } }
+    [SerializeField] private int StartHealth = 5;
+
+    private int currentHealth;
+
+    private Rigidbody2D rigidbody;
 
 
-    private void OnBecameInvisible()
+    void Start()
     {
-        Destroy(gameObject);
+        rigidbody = GetComponent<Rigidbody2D>();
+        currentHealth = StartHealth;
     }
 
-    private void OnTriggerEnter2D(Collider2D whatHitMe)
-    {
-        //parameter "whatHitMe" is the collider component of the Object hit
-        //Diffrent behaviours required depending of who was collided with
 
-        //Could check the Tag Type of the Object
-        //Could check the different Components
-        var player = whatHitMe.GetComponent<PlayerMovement>();
-        var bullet = whatHitMe.GetComponent<Bullet>();
-        if (player)
+    void OnTriggerEnter2D(Collider2D whatHitMe)
+    {
+        var projectile = whatHitMe.GetComponent<Projectile>();
+        if (projectile)
         {
-            //Destroy Enemy (this)
-            //Play Detonation Sound
-            player.Respawn(); // or inflict Damage
-        }
-        if (bullet)
-        {
-            //Destroy Enemy (this)
-            //Play Detonation Sound
-            Destroy(bullet.gameObject);
-            Destroy(gameObject);
+            currentHealth -= projectile.Damage;
+
+            //Knockback
+            //Stop moveposition before Knockback
+            var mellee = GetComponent<MeleeBehaviour>();
+            if (mellee)
+            {
+                Debug.Log("Hit melee");
+                mellee.Knockback(projectile.transform.rotation * Vector2.up, projectile.KnockbackForce);
+            }
+
+            if (currentHealth <= 0)
+            {
+                Destroy(projectile.gameObject);
+                Destroy(gameObject);
+            }
+            Destroy(projectile.gameObject);
         }
     }
+
+    //Could do an Inteface for Behaviour!!
+    /*interface IKnockback
+    {
+        void knockback(Vector2 direction, int projectileForce);
+    }*/
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
-public class Bullet : MonoBehaviour
+public class PrototypBullet : MonoBehaviour
 {
     [SerializeField] private float bulletSpeed = 10f;
 
