@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private FixedJoystick moveStick;
 
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D rb;
 
     [SerializeField] private float moveSpeed = 3f;
 
@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         stopMoving = true;
     }
 
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        rigidbody.MovePosition(rigidbody.position + movementInput * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
     }
 
     private void OnEnable()

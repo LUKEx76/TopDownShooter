@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class MeleeBehaviour : MonoBehaviour
+public class MeleeEnemy : Enemy
 {
     private GameObject player;
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D rb;
 
     [SerializeField] private float movementSpeed = 5f;
 
@@ -15,9 +15,11 @@ public class MeleeBehaviour : MonoBehaviour
     private float currentKnockbackTime;
 
 
+
+
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         currentKnockbackTime = 0;
     }
 
@@ -39,17 +41,18 @@ public class MeleeBehaviour : MonoBehaviour
         if (direction.magnitude > 1f)
         {
             //Move Enemy Towards Player
-            rigidbody.MovePosition(rigidbody.position + direction.normalized * movementSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + direction.normalized * movementSpeed * Time.fixedDeltaTime);
             //Rotate Enemy Towards Player
-            rigidbody.rotation = angle;
+            rb.rotation = angle;
         }
     }
 
-    public void Knockback(Vector2 direction, int force)
+    public override void Knockback(Vector2 direction, int projectileForce)
     {
         currentKnockbackTime = knockBackDuration;
         //StopMoving
         //AddForce
-        rigidbody.AddForce(direction * force, ForceMode2D.Impulse);
+        rb.AddForce(direction * projectileForce, ForceMode2D.Impulse);
     }
+
 }

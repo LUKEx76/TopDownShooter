@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 399526872961940122}
   - component: {fileID: 399526872961940123}
-  - component: {fileID: 399526872961940120}
-  - component: {fileID: 399526872961940121}
   - component: {fileID: 399526872961940126}
   - component: {fileID: 399526872961940101}
+  - component: {fileID: 7693705163159254373}
   m_Layer: 10
   m_Name: Enemy_Melee
   m_TagString: Untagged
@@ -84,33 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &399526872961940120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 399526872961940127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2697d51fae1a8af4fab50e59e268f925, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartHealth: 5
---- !u!114 &399526872961940121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 399526872961940127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05369de11e678cc4daba80ba01e8c0f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 3
-  knockBackDuration: 0.2
 --- !u!50 &399526872961940126
 Rigidbody2D:
   serializedVersion: 4
@@ -165,3 +137,19 @@ PolygonCollider2D:
       - {x: 0.44342995, y: -0.32435918}
       - {x: 0.44857216, y: -0.054996967}
       - {x: 0.053788185, y: 0.19421625}
+--- !u!114 &7693705163159254373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399526872961940127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05369de11e678cc4daba80ba01e8c0f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHealth: 5
+  scoreValue: 100
+  movementSpeed: 3
+  knockBackDuration: 0.1

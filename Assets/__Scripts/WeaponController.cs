@@ -12,7 +12,7 @@ public class WeaponController : MonoBehaviour
 
     private Transform gun;
     private GameObject bulletParent;
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D rb;
     private Coroutine firingCoroutine;
     private bool firing;
 
@@ -21,7 +21,7 @@ public class WeaponController : MonoBehaviour
     {
         firing = false;
         gun = transform.Find("Gun");
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         bulletParent = GameObject.Find("BulletParent");
         if (!bulletParent)
         {
@@ -34,7 +34,7 @@ public class WeaponController : MonoBehaviour
     {
         if (aimStick.Vertical != 0f || aimStick.Horizontal != 0f)
         {
-            rigidbody.rotation = Mathf.Atan2(aimStick.Vertical, aimStick.Horizontal) * Mathf.Rad2Deg - 90f;
+            rb.rotation = Mathf.Atan2(aimStick.Vertical, aimStick.Horizontal) * Mathf.Rad2Deg - 90f;
             if (!firing)
             {
                 firingCoroutine = StartCoroutine(FireCoroutine());
@@ -62,7 +62,7 @@ public class WeaponController : MonoBehaviour
             Rigidbody2D rbProjectile = projectile.GetComponent<Rigidbody2D>();
 
             //Get Vector from Shoot Joystick
-            Vector2 shootDir = Vector2fromAngle(rigidbody.rotation);
+            Vector2 shootDir = Vector2fromAngle(rb.rotation);
             rbProjectile.velocity = shootDir.normalized * projectile.Speed;
             yield return new WaitForSeconds(firingRate);
         }

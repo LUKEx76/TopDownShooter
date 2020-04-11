@@ -11,17 +11,24 @@ public class Enemy : MonoBehaviour
     //Handels Hit Detection
     //Publishes Events for Sound- and GameController
 
-    [SerializeField] private int StartHealth = 5;
+
+    [SerializeField] private int startHealth = 1;
+    [SerializeField] private int scoreValue = 100;
 
     private int currentHealth;
 
-    private Rigidbody2D rigidbody;
 
+    //Events for GameController
 
-    void Start()
+    //Delegate Function to be reacted on by GameController
+    public delegate void EnemyKilled(Enemy enemy);
+    public static EnemyKilled EnemyKilledEvent; //Static Method to be implemented in the Listener(GameController)
+
+    public int ScoreValue { get => scoreValue; }
+
+    void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
-        currentHealth = StartHealth;
+        currentHealth = startHealth;
     }
 
 
@@ -32,27 +39,27 @@ public class Enemy : MonoBehaviour
         {
             currentHealth -= projectile.Damage;
 
-            //Knockback
             //Stop moveposition before Knockback
-            var mellee = GetComponent<MeleeBehaviour>();
-            if (mellee)
-            {
-                Debug.Log("Hit melee");
-                mellee.Knockback(projectile.transform.rotation * Vector2.up, projectile.KnockbackForce);
-            }
-
+            Knockback(projectile.transform.rotation * Vector2.up, projectile.KnockbackForce);
             if (currentHealth <= 0)
             {
                 Destroy(projectile.gameObject);
+                PublishEnemyKilledEvent();
                 Destroy(gameObject);
             }
             Destroy(projectile.gameObject);
         }
     }
 
-    //Could do an Inteface for Behaviour!!
-    /*interface IKnockback
+    public void PublishEnemyKilledEvent()
     {
-        void knockback(Vector2 direction, int projectileForce);
-    }*/
+        if (EnemyKilledEvent != null) //Check for Event-Subscribtions
+        {
+            EnemyKilledEvent(this);
+        }
+    }
+
+    //Virtual Functions
+    public virtual void Knockback(Vector2 direction, int projectileForce) { } //Functionality in Child
+
 }
