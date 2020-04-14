@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 890611718513667402}
   - component: {fileID: 890611718513667401}
   - component: {fileID: 890611718513667407}
+  - component: {fileID: 6949249279838135186}
   m_Layer: 10
   m_Name: Stationary_Enemy_Ranged
   m_TagString: Untagged
@@ -137,6 +138,26 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1607179321001023184, guid: 6c6bd9cfd284e2741907209c00f45518,
     type: 3}
   firingRate: 0.8
+  rotationSpeed: 0
+--- !u!95 &6949249279838135186
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890611718513667406}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c67dcc495e6c3ac4b85b7ba2cfa49fc8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &890611719451017542
 GameObject:
   m_ObjectHideFlags: 0

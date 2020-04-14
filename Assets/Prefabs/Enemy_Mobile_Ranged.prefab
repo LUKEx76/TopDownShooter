@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8120983290252601473}
   - component: {fileID: 8461653079468741479}
   - component: {fileID: 719774702837435862}
+  - component: {fileID: 1771686051959423219}
   m_Layer: 0
   m_Name: Enemy_Mobile_Ranged
   m_TagString: Untagged
@@ -162,6 +163,25 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1607179321001023184, guid: 6c6bd9cfd284e2741907209c00f45518,
     type: 3}
   firingRate: 0.5
+--- !u!95 &1771686051959423219
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840112033464258072}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c67dcc495e6c3ac4b85b7ba2cfa49fc8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3618139122584958779
 GameObject:
   m_ObjectHideFlags: 0

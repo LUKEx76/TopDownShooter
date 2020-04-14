@@ -3810,26 +3810,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2354852374771681706, guid: a955c35f873d9414bbc51b16ff77cf45,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 2354852374771681706, guid: a955c35f873d9414bbc51b16ff77cf45,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 693
-      objectReference: {fileID: 0}
-    - target: {fileID: 2354852375529522974, guid: a955c35f873d9414bbc51b16ff77cf45,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 2354852375529522974, guid: a955c35f873d9414bbc51b16ff77cf45,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 75
-      objectReference: {fileID: 0}
     - target: {fileID: 2354852375631773542, guid: a955c35f873d9414bbc51b16ff77cf45,
         type: 3}
       propertyPath: m_Name
@@ -3949,11 +3929,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4457381860395929631, guid: 72e0950b49b3e7b4a8d73c7ec3d42a8e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4457381862069282566, guid: 72e0950b49b3e7b4a8d73c7ec3d42a8e,
         type: 3}
       propertyPath: aimStick

@@ -99,6 +99,7 @@ public class StationaryRangedEnemy : Enemy
 
         try
         {
+            //Getting the GameObject of the Collider can lead to an Exception
             var player_hit = hit.collider.gameObject.GetComponent<PlayerMovement>();
             if (player_hit)
             {
@@ -111,10 +112,8 @@ public class StationaryRangedEnemy : Enemy
         }
         catch
         {
-            Debug.Log("Error Occured");
+            return false;
         }
-
-        return false;
     }
 
     public override void Knockback(Vector2 direction, int projectileForce)

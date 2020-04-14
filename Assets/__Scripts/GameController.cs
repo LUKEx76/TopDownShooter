@@ -5,22 +5,25 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+
     [SerializeField] private int startingHealth;
     [SerializeField] private TextMeshProUGUI scoreText; //UI Display of Score
 
+    private int maxHealth;
     private int currentHealth;
+    private int playerScore;
 
-    private int playerScore = 0;
 
     void Awake()
     {
         SetupSingleton();
+        playerScore = 0;
+        currentHealth = startingHealth;
     }
 
     void Start()
     {
         UpdateScore();
-        currentHealth = startingHealth;
     }
 
     void SetupSingleton()
@@ -53,6 +56,9 @@ public class GameController : MonoBehaviour
     {
         playerScore += enemy.ScoreValue;
         UpdateScore();
+
+        //Check if There are still Enemies in the Level
+        //FindObjectsOfType<Enemy>().Length - 1;
     }
 
     void UpdateScore()
@@ -61,5 +67,18 @@ public class GameController : MonoBehaviour
 
         //UI Display
         //scoreText.text = playerScore.ToString();
+    }
+
+    public void LoseOneHealth()
+    {
+        currentHealth--;
+        Debug.Log("PLAYER HEALTH: " + currentHealth);
+
+        //Draw Health Icons on UI
+        if (currentHealth <= 0)
+        {
+            //GAME OVER
+            Debug.Log("GAME OVER");
+        }
     }
 }
