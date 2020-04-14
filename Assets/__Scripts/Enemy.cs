@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour
 {
     //Parent Class for all Enemies
@@ -34,6 +33,7 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D whatHitMe)
     {
+        Debug.Log("HIT");
         var projectile = whatHitMe.GetComponent<Projectile>();
         if (projectile)
         {

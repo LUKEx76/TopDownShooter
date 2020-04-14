@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+
 public class MeleeEnemy : Enemy
 {
     private GameObject player;
     private Rigidbody2D rb;
 
-    [SerializeField] private float movementSpeed = 5f;
+    [SerializeField] private float movementSpeed = 3f;
 
-    [SerializeField] private float knockBackDuration = 1f;
+    [SerializeField] private float knockbackDuration = 0.1f;
 
     private float currentKnockbackTime;
 
@@ -35,8 +35,9 @@ public class MeleeEnemy : Enemy
 
     void Move()
     {
+        //Replace with A* Pathfinding
         Vector2 direction = player.transform.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        float angle = Util.AngleFromVector2(direction);
 
         if (direction.magnitude > 1f)
         {
@@ -49,7 +50,7 @@ public class MeleeEnemy : Enemy
 
     public override void Knockback(Vector2 direction, int projectileForce)
     {
-        currentKnockbackTime = knockBackDuration;
+        currentKnockbackTime = knockbackDuration;
         //StopMoving
         //AddForce
         rb.AddForce(direction * projectileForce, ForceMode2D.Impulse);

@@ -14,7 +14,7 @@ public class WeaponController : MonoBehaviour
     private GameObject bulletParent;
     private Rigidbody2D rb;
     private Coroutine firingCoroutine;
-    private bool firing;
+    private bool firing; //To start Coroutine only once and not on every frame
 
 
     void Start()
@@ -34,7 +34,8 @@ public class WeaponController : MonoBehaviour
     {
         if (aimStick.Vertical != 0f || aimStick.Horizontal != 0f)
         {
-            rb.rotation = Mathf.Atan2(aimStick.Vertical, aimStick.Horizontal) * Mathf.Rad2Deg - 90f;
+            //Maybe aimStick Horizontal and Vertical
+            rb.rotation = Util.AngleFromVector2(aimStick.Direction);
             if (!firing)
             {
                 firingCoroutine = StartCoroutine(FireCoroutine());
@@ -62,18 +63,12 @@ public class WeaponController : MonoBehaviour
             Rigidbody2D rbProjectile = projectile.GetComponent<Rigidbody2D>();
 
             //Get Vector from Shoot Joystick
-            Vector2 shootDir = Vector2fromAngle(rb.rotation);
-            rbProjectile.velocity = shootDir.normalized * projectile.Speed;
+            Vector2 shootDir = Util.Vector2fromAngle(rb.rotation);
+            rbProjectile.AddForce(shootDir.normalized * projectile.Speed, ForceMode2D.Impulse);
             yield return new WaitForSeconds(firingRate);
         }
 
     }
 
-    private Vector2 Vector2fromAngle(float angle)
-    {
-        angle += 90f;
-        angle *= Mathf.Deg2Rad;
-        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-    }
 
 }
