@@ -44,12 +44,17 @@ public class PlayerHealth : MonoBehaviour
         var projectile = whatHitMe.GetComponent<Projectile>();
         if (projectile)
         {
-            if (currentInvulnerability <= 0)
-            {
-                currentInvulnerability = invulnerabilityAfterHit;
-                gameController.LoseOneHealth();
-            }
+            HitTaken();
             Destroy(projectile.gameObject);
+        }
+    }
+
+    public void HitTaken()
+    {
+        if (currentInvulnerability <= 0)
+        {
+            currentInvulnerability = invulnerabilityAfterHit;
+            gameController.LoseOneHealth();
         }
     }
 }

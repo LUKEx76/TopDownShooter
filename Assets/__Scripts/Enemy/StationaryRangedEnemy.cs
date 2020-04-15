@@ -116,7 +116,7 @@ public class StationaryRangedEnemy : Enemy
         }
     }
 
-    public override void Knockback(Vector2 direction, int projectileForce)
+    public override void Knockback(Vector2 direction, float force)
     {
         //Stationary Target cant be knocked back, but stopps shooting
         currentKnockbackTime = knockbackDuration;

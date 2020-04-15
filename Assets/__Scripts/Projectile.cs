@@ -11,12 +11,12 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] private int damage = 1;
 
-    [SerializeField] private int knockbackForce = 10;
+    [SerializeField] private float knockbackForce = 10;
 
     public float Speed { get { return speed; } }
 
     public int Damage { get { return damage; } }
 
-    public int KnockbackForce { get { return knockbackForce; } }
+    public float KnockbackForce { get { return knockbackForce; } }
 
 }

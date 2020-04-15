@@ -137,12 +137,12 @@ public class MobileRangedEnemy : Enemy
         return false;
     }
 
-    public override void Knockback(Vector2 direction, int projectileForce)
+    public override void Knockback(Vector2 direction, float force)
     {
         //StopMoving
         currentKnockbackTime = knockbackDuration;
 
         //Dependent on Mass!
-        rb.AddForce(direction * projectileForce, ForceMode2D.Impulse);
+        rb.AddForce(direction * force, ForceMode2D.Impulse);
     }
 }

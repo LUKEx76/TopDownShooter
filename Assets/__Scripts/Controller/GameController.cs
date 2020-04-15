@@ -13,16 +13,23 @@ public class GameController : MonoBehaviour
     private int currentHealth;
     private int playerScore;
 
+    public int MaxHealth { get => maxHealth; }
+    public int CurrentHealth { get => currentHealth; }
+
+    private LifeCounter lifeCounter;
 
     void Awake()
     {
         SetupSingleton();
         playerScore = 0;
+        maxHealth = startingHealth;
         currentHealth = startingHealth;
     }
 
     void Start()
     {
+        lifeCounter = FindObjectOfType<LifeCounter>();
+        lifeCounter.DrawHealth();
         UpdateScore();
     }
 
@@ -57,28 +64,48 @@ public class GameController : MonoBehaviour
         playerScore += enemy.ScoreValue;
         UpdateScore();
 
+
         //Check if There are still Enemies in the Level
         //FindObjectsOfType<Enemy>().Length - 1;
     }
 
     void UpdateScore()
     {
-        Debug.Log("Score: " + playerScore);
-
         //UI Display
-        //scoreText.text = playerScore.ToString();
+        scoreText.text = "Score: " + playerScore.ToString();
     }
 
     public void LoseOneHealth()
     {
         currentHealth--;
-        Debug.Log("PLAYER HEALTH: " + currentHealth);
-
         //Draw Health Icons on UI
+        lifeCounter.DrawHealth();
+
         if (currentHealth <= 0)
         {
-            //GAME OVER
-            Debug.Log("GAME OVER");
+            Destroy(FindObjectOfType<PlayerMovement>().gameObject);
+        }
+    }
+
+    void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
+
+    public void TogglePauseResume()
+    {
+        if (Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
+        else
+        {
+            Time.timeScale = 0;
         }
     }
 }

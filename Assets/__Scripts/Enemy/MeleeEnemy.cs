@@ -11,6 +11,7 @@ public class MeleeEnemy : Enemy
     [SerializeField] private float movementSpeed = 3f;
 
     [SerializeField] private float knockbackDuration = 0.1f;
+    [SerializeField] private float attackKnockbackForce = 1;
 
     private float currentKnockbackTime;
 
@@ -46,14 +47,28 @@ public class MeleeEnemy : Enemy
             //Rotate Enemy Towards Player
             rb.rotation = angle;
         }
+        else
+        {
+            Attack();
+        }
     }
 
-    public override void Knockback(Vector2 direction, int projectileForce)
+    void Attack()
+    {
+        //Imflickt Damage
+        if (player)
+        {
+            player.GetComponent<PlayerHealth>().HitTaken();
+        }
+        Knockback(Util.Vector2fromAngle(rb.rotation - 180), attackKnockbackForce);
+    }
+
+    public override void Knockback(Vector2 direction, float force)
     {
         currentKnockbackTime = knockbackDuration;
         //StopMoving
         //AddForce
-        rb.AddForce(direction * projectileForce, ForceMode2D.Impulse);
+        rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
     }
 
 }

@@ -67,6 +67,6 @@ public class Enemy : MonoBehaviour
     }
 
     //Virtual Functions
-    public virtual void Knockback(Vector2 direction, int projectileForce) { } //Functionality in Child
+    public virtual void Knockback(Vector2 direction, float force) { } //Functionality in Child
 
 }
