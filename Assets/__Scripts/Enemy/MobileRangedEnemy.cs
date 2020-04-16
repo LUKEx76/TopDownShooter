@@ -43,7 +43,15 @@ public class MobileRangedEnemy : Enemy
     void FixedUpdate()
     {
         currentKnockbackTime -= Time.fixedDeltaTime;
-        player = FindObjectOfType<PlayerMovement>().gameObject;
+        try
+        {
+            player = FindObjectOfType<PlayerMovement>().gameObject;
+        }
+        catch
+        {
+            player = null;
+        }
+
         //Decide whether to shoot or move
         if (player && currentKnockbackTime <= 0)
         {
@@ -131,10 +139,8 @@ public class MobileRangedEnemy : Enemy
         }
         catch
         {
-            Debug.Log("Error Occured");
+            return false;
         }
-
-        return false;
     }
 
     public override void Knockback(Vector2 direction, float force)

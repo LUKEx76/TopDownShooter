@@ -149,7 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ba4d4629ddee474b883b874e9fb729d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveStick: {fileID: 0}
+  moveStick: {fileID: 6523213242256321487, guid: f457b7a5b440be2449b24aad63ec73e4,
+    type: 3}
   moveSpeed: 4
 --- !u!114 &4457381862069282566
 MonoBehaviour:
@@ -166,7 +167,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 3846009857179718179, guid: 9ea92055278df3547a1a7c6126708648,
     type: 3}
   firingRate: 0.25
-  aimStick: {fileID: 0}
+  aimStick: {fileID: 2284061501475471890, guid: 4d2d71e8dff27bb4a8cf50eb4bfbb9a5,
+    type: 3}
 --- !u!58 &4457381862069282567
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class PointSpawner : MonoBehaviour
 
     private GameObject spawnParent;
 
-    void Start()
+    void Awake()
     {
         //Find Parent or Create it
         //Keeps Parent unique in the Scene

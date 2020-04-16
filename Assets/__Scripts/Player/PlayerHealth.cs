@@ -42,10 +42,25 @@ public class PlayerHealth : MonoBehaviour
     void OnTriggerEnter2D(Collider2D whatHitMe)
     {
         var projectile = whatHitMe.GetComponent<Projectile>();
+        var apple = whatHitMe.GetComponent<Apple>();
+        var coin = whatHitMe.GetComponent<Coin>();
+
         if (projectile)
         {
             HitTaken();
             Destroy(projectile.gameObject);
+        }
+
+        if (apple)
+        {
+            gameController.HealFor(apple.HealsFor);
+            Destroy(apple.gameObject);
+        }
+
+        if (coin)
+        {
+            gameController.AddCoins(coin.CoinValue);
+            Destroy(coin.gameObject);
         }
     }
 

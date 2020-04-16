@@ -8,8 +8,7 @@ public class WeaponController : MonoBehaviour
     //PRIVATE FIELDS
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private float firingRate = 0.25f;
-    [SerializeField] private Joystick aimStick;
-
+    private FixedJoystick shootStick;
     private Transform gun;
     private GameObject bulletParent;
     private Rigidbody2D rb;
@@ -19,6 +18,7 @@ public class WeaponController : MonoBehaviour
 
     void Start()
     {
+        shootStick = FindObjectOfType<ShootJoystick>().gameObject.GetComponent<FixedJoystick>();
         firing = false;
         gun = transform.Find("Gun");
         rb = GetComponent<Rigidbody2D>();
@@ -32,10 +32,10 @@ public class WeaponController : MonoBehaviour
 
     void Update()
     {
-        if (aimStick.Vertical != 0f || aimStick.Horizontal != 0f)
+        if (shootStick.Vertical != 0f || shootStick.Horizontal != 0f)
         {
             //Maybe aimStick Horizontal and Vertical
-            rb.rotation = Util.AngleFromVector2(aimStick.Direction);
+            rb.rotation = Util.AngleFromVector2(shootStick.Direction);
             if (!firing)
             {
                 firingCoroutine = StartCoroutine(FireCoroutine());

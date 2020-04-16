@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     PlayerInputActions inputActions;
 
-    [SerializeField] private FixedJoystick moveStick;
+    private FixedJoystick moveStick;
 
     private Rigidbody2D rb;
 
@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        moveStick = FindObjectOfType<MovementJoystick>().gameObject.GetComponent<FixedJoystick>();
         rb = GetComponent<Rigidbody2D>();
         stopMoving = true;
     }

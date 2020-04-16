@@ -8,10 +8,12 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private int startingHealth;
     [SerializeField] private TextMeshProUGUI scoreText; //UI Display of Score
+    [SerializeField] private TextMeshProUGUI coinText; //UI Display of Coins
 
     private int maxHealth;
     private int currentHealth;
     private int playerScore;
+    private int collectedCoins;
 
     public int MaxHealth { get => maxHealth; }
     public int CurrentHealth { get => currentHealth; }
@@ -21,6 +23,7 @@ public class GameController : MonoBehaviour
     void Awake()
     {
         SetupSingleton();
+        collectedCoins = 0;
         playerScore = 0;
         maxHealth = startingHealth;
         currentHealth = startingHealth;
@@ -29,8 +32,8 @@ public class GameController : MonoBehaviour
     void Start()
     {
         lifeCounter = FindObjectOfType<LifeCounter>();
-        lifeCounter.DrawHealth();
-        UpdateScore();
+        //lifeCounter.DrawHealth();
+        UpdateUI();
     }
 
     void SetupSingleton()
@@ -51,28 +54,37 @@ public class GameController : MonoBehaviour
     {
         //Subsribtion to Events
         Enemy.EnemyKilledEvent += OnEnemyKilledEvent;
+        Box.BoxDestroyedEvent += OnBoxDestroyedEvent;
     }
 
     void OnDisable()
     {
         //Unsubsribtion to Events
         Enemy.EnemyKilledEvent -= OnEnemyKilledEvent;
+        Box.BoxDestroyedEvent += OnBoxDestroyedEvent;
     }
 
     void OnEnemyKilledEvent(Enemy enemy)
     {
         playerScore += enemy.ScoreValue;
-        UpdateScore();
+        UpdateUI();
 
 
         //Check if There are still Enemies in the Level
         //FindObjectsOfType<Enemy>().Length - 1;
     }
 
-    void UpdateScore()
+    void OnBoxDestroyedEvent(Box box)
+    {
+        playerScore += box.ScoreValue;
+        UpdateUI();
+    }
+
+    void UpdateUI()
     {
         //UI Display
         scoreText.text = "Score: " + playerScore.ToString();
+        coinText.text = "Coins: " + collectedCoins.ToString();
     }
 
     public void LoseOneHealth()
@@ -87,12 +99,29 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void PauseGame()
+    public void HealFor(int healAmount)
+    {
+        currentHealth += healAmount;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        lifeCounter.DrawHealth();
+    }
+
+    public void AddCoins(int coinValue)
+    {
+        collectedCoins += coinValue;
+        playerScore += coinValue * 100;
+        UpdateUI();
+    }
+
+    public void PauseGame()
     {
         Time.timeScale = 0;
     }
 
-    void ResumeGame()
+    public void ResumeGame()
     {
         Time.timeScale = 1;
     }
@@ -107,5 +136,13 @@ public class GameController : MonoBehaviour
         {
             Time.timeScale = 0;
         }
+    }
+
+
+    public void Reset()
+    {
+        //When going back to Main Menu reset GameController
+        Time.timeScale = 1;
+        Destroy(this.gameObject);
     }
 }

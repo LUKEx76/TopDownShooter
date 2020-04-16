@@ -130,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startHealth: 5
   scoreValue: 100
-  sightDistance: 10
+  sightDistance: 7
   visibleLayer:
     serializedVersion: 2
     m_Bits: 1536

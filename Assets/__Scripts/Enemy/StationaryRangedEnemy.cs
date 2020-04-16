@@ -39,7 +39,15 @@ public class StationaryRangedEnemy : Enemy
     void FixedUpdate()
     {
         currentKnockbackTime -= Time.fixedDeltaTime;
-        player = FindObjectOfType<PlayerMovement>().gameObject;
+        try
+        {
+            player = FindObjectOfType<PlayerMovement>().gameObject;
+        }
+        catch
+        {
+            player = null;
+        }
+
         if (player && currentKnockbackTime <= 0)
         {
             if (PlayerInSight())
