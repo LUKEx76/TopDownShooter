@@ -8,6 +8,10 @@ public class WeaponController : MonoBehaviour
     //PRIVATE FIELDS
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private float firingRate = 0.25f;
+    [SerializeField] private AudioClip shootSound;
+
+    private GameController gameController;
+    private AudioController audioController;
     private FixedJoystick shootStick;
     private Transform gun;
     private GameObject bulletParent;
@@ -18,6 +22,8 @@ public class WeaponController : MonoBehaviour
 
     void Start()
     {
+        audioController = FindObjectOfType<AudioController>();
+        gameController = FindObjectOfType<GameController>();
         shootStick = FindObjectOfType<ShootJoystick>().gameObject.GetComponent<FixedJoystick>();
         firing = false;
         gun = transform.Find("Gun");
@@ -54,20 +60,43 @@ public class WeaponController : MonoBehaviour
     {
         while (true)
         {
-            //Instantiate Projectile Prefab
-            Projectile projectile = Instantiate(projectilePrefab, bulletParent.transform);
-            projectile.transform.position = gun.transform.position;
-            projectile.transform.rotation = gun.transform.rotation;
+            ShootOneProjectile(rb.rotation);
 
-            //Get RB of Projectile
-            Rigidbody2D rbProjectile = projectile.GetComponent<Rigidbody2D>();
+            //Check if TrippleBullet Upgrade is active
+            if (gameController.TrippleBulletUpgrade)
+            {
+                ShootOneProjectile(rb.rotation + 10f);
+                ShootOneProjectile(rb.rotation - 10f);
+            }
 
-            //Get Vector from Shoot Joystick
-            Vector2 shootDir = Util.Vector2fromAngle(rb.rotation);
-            rbProjectile.AddForce(shootDir.normalized * projectile.Speed, ForceMode2D.Impulse);
-            yield return new WaitForSeconds(firingRate);
+            //Check if FIreRate is Upgraded
+            if (gameController.FireRateUpgrade)
+            {
+                yield return new WaitForSeconds(firingRate / 2);
+            }
+            else
+            {
+                yield return new WaitForSeconds(firingRate);
+            }
+
         }
 
+    }
+
+    void ShootOneProjectile(float directionAngle)
+    {
+        audioController.PlayOneShot(shootSound);
+        //Instantiate Projectile Prefab
+        Projectile projectile = Instantiate(projectilePrefab, bulletParent.transform);
+        projectile.transform.position = gun.transform.position;
+        projectile.transform.rotation = gun.transform.rotation;
+
+        //Get RB of Projectile
+        Rigidbody2D rbProjectile = projectile.GetComponent<Rigidbody2D>();
+
+        //Get Vector from Shoot Joystick
+        Vector2 shootDir = Util.Vector2fromAngle(directionAngle);
+        rbProjectile.AddForce(shootDir.normalized * projectile.Speed, ForceMode2D.Impulse);
     }
 
 

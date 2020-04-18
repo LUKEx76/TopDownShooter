@@ -10,8 +10,17 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        player = FindObjectOfType<PlayerMovement>().gameObject;
-        offset = transform.position - player.transform.position;
+        try
+        {
+            player = FindObjectOfType<PlayerMovement>().gameObject;
+            offset = transform.position - player.transform.position;
+        }
+        catch
+        {
+            player = null;
+            offset = new Vector3(0f, 0f, -10f);
+        }
+
     }
 
 

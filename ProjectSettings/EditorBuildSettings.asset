@@ -6,21 +6,60 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/__Scenes/MainMenu.unity
-    guid: 16e89dbcc06b3e740b92d65c8df76b84
-  - enabled: 1
+    path: Assets/__Scenes/OutGameMenus/MainMenu.unity
+    guid: dbb1cff0e9eaa3b4998d538f582bcfe6
+  - enabled: 0
     path: Assets/__Scenes/Prototyp.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/__Scenes/DevTestLevel.unity
+    path: Assets/__Scenes/Levels/DevTestLevel.unity
     guid: 6a8566e1ce6fb9c4c9e3556d5f22e090
   - enabled: 1
-    path: Assets/__Scenes/InGameMenu.unity
+    path: Assets/__Scenes/InGameMenus/InGameMenu.unity
     guid: f30784d1bf36c064e92f8fe11e5315e8
   - enabled: 1
-    path: Assets/__Scenes/Highscore.unity
+    path: Assets/__Scenes/OutGameMenus/Highscore.unity
     guid: a6cb7d9f8aa08e74da93ca641e4fa022
   - enabled: 1
-    path: Assets/__Scenes/SelectLevel.unity
+    path: Assets/__Scenes/OutGameMenus/SelectLevel.unity
     guid: 4471607ae6cf585479233d81434649e1
+  - enabled: 1
+    path: Assets/__Scenes/InGameMenus/Shop.unity
+    guid: fc29d7227ff4eee4381ad5924e745db3
+  - enabled: 1
+    path: Assets/__Scenes/Levels/Tutorial.unity
+    guid: 632e4de8b614554418a7f9674ca1965b
+  - enabled: 1
+    path: Assets/__Scenes/Levels/Level1_1.unity
+    guid: a04f4ee4f7cf9594eb6bef125d1fbbee
+  - enabled: 1
+    path: Assets/__Scenes/Levels/Level2_1.unity
+    guid: 5855c0df6489e334a9e848c9e0912a8b
+  - enabled: 1
+    path: Assets/__Scenes/Levels/Level3_1.unity
+    guid: bc68ea41b91dce9428b75f5dc14894b2
+  - enabled: 1
+    path: Assets/__Scenes/Levels/Level1_3.unity
+    guid: f834c2ecdb70dbe4a842295a89bc2595
+  - enabled: 1
+    path: Assets/__Scenes/InGameMenus/GameWon.unity
+    guid: d2e8eb205e85fb040ba99cf7c201039d
+  - enabled: 1
+    path: Assets/__Scenes/Levels/Level2_3.unity
+    guid: 63c5d6bf0cb985942a48b9eee059b18d
+  - enabled: 1
+    path: Assets/__Scenes/Levels/Level3_3.unity
+    guid: 79ae06fd95111854f80a5e3e6114972b
+  - enabled: 1
+    path: Assets/__Scenes/InGameMenus/GameOver.unity
+    guid: 7367f48f2749fc34391d7d6f796e3f1c
+  - enabled: 1
+    path: Assets/__Scenes/Levels/Level3_2.unity
+    guid: 0a8be433cdf7968438c4d99a27e87cb5
+  - enabled: 1
+    path: Assets/__Scenes/Levels/Level2_2.unity
+    guid: 92944315dc1ab194ca9d6bac3e9c18ed
+  - enabled: 1
+    path: Assets/__Scenes/Levels/Level1_2.unity
+    guid: 4bb2c47bd837d2f43b77521608e01654
   m_configObjects: {}

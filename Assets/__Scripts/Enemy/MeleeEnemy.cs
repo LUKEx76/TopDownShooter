@@ -12,6 +12,7 @@ public class MeleeEnemy : Enemy
 
     [SerializeField] private float knockbackDuration = 0.1f;
     [SerializeField] private float attackKnockbackForce = 1;
+    [SerializeField] private AudioClip attackClip;
 
     private float currentKnockbackTime;
 
@@ -27,7 +28,14 @@ public class MeleeEnemy : Enemy
     void FixedUpdate()
     {
         currentKnockbackTime -= Time.fixedDeltaTime;
-        player = FindObjectOfType<PlayerMovement>().gameObject;
+        try
+        {
+            player = FindObjectOfType<PlayerMovement>().gameObject;
+        }
+        catch
+        {
+            player = null;
+        }
         if (player && currentKnockbackTime <= 0)
         {
             Move();
@@ -58,6 +66,7 @@ public class MeleeEnemy : Enemy
         //Imflickt Damage
         if (player)
         {
+            base.audioController.PlayOneShot(attackClip);
             player.GetComponent<PlayerHealth>().HitTaken();
         }
         Knockback(Util.Vector2fromAngle(rb.rotation - 180), attackKnockbackForce);

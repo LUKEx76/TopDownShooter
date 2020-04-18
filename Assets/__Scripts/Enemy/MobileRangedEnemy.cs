@@ -19,6 +19,7 @@ public class MobileRangedEnemy : Enemy
     [SerializeField] private float knockbackDuration = 0.1f;
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private float firingRate = 0.5f;
+    [SerializeField] private AudioClip shootClip;
 
     private float currentKnockbackTime;
 
@@ -108,6 +109,8 @@ public class MobileRangedEnemy : Enemy
             Projectile projectile = Instantiate(projectilePrefab, bulletParent.transform);
             projectile.transform.position = gun.transform.position;
             projectile.transform.rotation = gun.transform.rotation;
+
+            base.audioController.PlayOneShot(shootClip);
 
             //Get RB of Projectile
             Rigidbody2D rbProjectile = projectile.GetComponent<Rigidbody2D>();

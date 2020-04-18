@@ -13,10 +13,18 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] private float knockbackForce = 10;
 
-    public float Speed { get { return speed; } }
+    [SerializeField] private AudioClip destroySound;
 
-    public int Damage { get { return damage; } }
+    [SerializeField] private bool friendlyFire;
 
-    public float KnockbackForce { get { return knockbackForce; } }
+    public float Speed { get => speed; }
+
+    public int Damage { get => damage; }
+
+    public float KnockbackForce { get => knockbackForce; }
+
+    public AudioClip DestroySound { get => destroySound; }
+
+    public bool FriendlyFire { get => friendlyFire; }
 
 }

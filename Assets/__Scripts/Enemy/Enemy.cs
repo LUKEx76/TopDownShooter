@@ -15,9 +15,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int startHealth = 3;
     [SerializeField] private int scoreValue = 100;
 
+    [SerializeField] private AudioClip hitTakenClip;
+    [SerializeField] private AudioClip dieClip;
+
     private int currentHealth;
 
     private Animator anim;
+    protected AudioController audioController;
     private string damageAnimationTrigger = "ProjectileHit";
 
 
@@ -34,6 +38,7 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = startHealth;
         anim = GetComponent<Animator>();
+        audioController = FindObjectOfType<AudioController>();
     }
 
 
@@ -45,16 +50,20 @@ public class Enemy : MonoBehaviour
             currentHealth -= projectile.Damage;
             anim.SetTrigger(damageAnimationTrigger);
 
+            audioController.PlayOneShot(hitTakenClip);
+
             //Stop moveposition before Knockback
             Knockback(projectile.transform.rotation * Vector2.up, projectile.KnockbackForce);
 
+            audioController.PlayOneShot(projectile.DestroySound);
+            Destroy(projectile.gameObject);
+
             if (currentHealth <= 0)
             {
-                Destroy(projectile.gameObject);
+                audioController.PlayOneShot(dieClip);
                 PublishEnemyKilledEvent();
                 Destroy(gameObject);
             }
-            Destroy(projectile.gameObject);
         }
     }
 

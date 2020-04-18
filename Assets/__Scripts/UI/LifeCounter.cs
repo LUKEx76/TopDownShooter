@@ -22,39 +22,42 @@ public class LifeCounter : MonoBehaviour
 
     public void DrawHealth()
     {
-        //Clear Images
-        int children = transform.childCount;
-        for (int i = 0; i < children; i++)
+        if (gameController)
         {
-            Destroy(transform.GetChild(i).gameObject);
-        }
-
-        //Draw new Images
-        currentHealth = gameController.CurrentHealth;
-        maxHealth = gameController.MaxHealth;
-
-        for (int i = 0; i < maxHealth; i += 2)
-        {
-            if (i < currentHealth)
+            //Clear Images
+            int children = transform.childCount;
+            for (int i = 0; i < children; i++)
             {
-                //Draw actual Health
-                if (i + 1 == currentHealth)
+                Destroy(transform.GetChild(i).gameObject);
+            }
+
+            //Draw new Images
+            currentHealth = gameController.CurrentHealth;
+            maxHealth = gameController.MaxHealth;
+
+            for (int i = 0; i < maxHealth; i += 2)
+            {
+                if (i < currentHealth)
                 {
-                    //Draw Only Half an Heart
-                    Instantiate(halfHeart, transform);
+                    //Draw actual Health
+                    if (i + 1 == currentHealth)
+                    {
+                        //Draw Only Half an Heart
+                        Instantiate(halfHeart, transform);
+                    }
+                    else
+                    {
+                        //Draw a Full Heart
+                        Instantiate(fullHeart, transform);
+                    }
                 }
                 else
                 {
-                    //Draw a Full Heart
-                    Instantiate(fullHeart, transform);
+                    //Draw an Empty Heart
+                    Instantiate(emptyHeart, transform);
                 }
-            }
-            else
-            {
-                //Draw an Empty Heart
-                Instantiate(emptyHeart, transform);
-            }
 
+            }
         }
     }
 }

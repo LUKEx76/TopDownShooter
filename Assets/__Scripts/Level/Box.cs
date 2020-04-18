@@ -6,7 +6,10 @@ using UnityEngine.Tilemaps;
 public class Box : MonoBehaviour
 {
     [SerializeField] private int scoreValue = 10;
+    [SerializeField] private AudioClip destroySound;
     private Tilemap tilemap;
+
+    private AudioController audioController;
 
     public int ScoreValue { get => scoreValue; }
 
@@ -17,6 +20,7 @@ public class Box : MonoBehaviour
     void Start()
     {
         tilemap = GetComponent<Tilemap>();
+        audioController = FindObjectOfType<AudioController>();
     }
 
 
@@ -27,10 +31,12 @@ public class Box : MonoBehaviour
         {
             if (tilemap.HasTile(tilemap.WorldToCell(projectile.transform.position)))
             {
+                audioController.PlayOneShot(destroySound);
                 PublishBoxDestroyedEvent();
                 tilemap.SetTile(tilemap.WorldToCell(projectile.transform.position), null);
 
                 //Sound and Animation before Destroy
+                audioController.PlayOneShot(projectile.DestroySound);
                 Destroy(projectile.gameObject);
             }
         }

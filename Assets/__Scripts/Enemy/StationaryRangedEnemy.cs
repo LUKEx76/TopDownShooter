@@ -15,7 +15,7 @@ public class StationaryRangedEnemy : Enemy
     [SerializeField] private float knockbackDuration = 0.1f;
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private float firingRate = 0.5f;
-
+    [SerializeField] private AudioClip shootClip;
     [SerializeField] [Range(0, 1)] private float rotationSpeed;
 
     private float currentKnockbackTime;
@@ -81,22 +81,27 @@ public class StationaryRangedEnemy : Enemy
     {
         while (true)
         {
-            //Look towards Player
-            transform.rotation = Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position);
+            if (player)
+            {
+                //Look towards Player
+                transform.rotation = Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position);
 
-            //Instantiate Projectile Prefab
-            Projectile projectile = Instantiate(projectilePrefab, bulletParent.transform);
-            projectile.transform.position = gun.transform.position;
-            projectile.transform.rotation = gun.transform.rotation;
+                //Instantiate Projectile Prefab
+                Projectile projectile = Instantiate(projectilePrefab, bulletParent.transform);
+                projectile.transform.position = gun.transform.position;
+                projectile.transform.rotation = gun.transform.rotation;
 
-            //Get RB of Projectile
-            Rigidbody2D rbProjectile = projectile.GetComponent<Rigidbody2D>();
+                base.audioController.PlayOneShot(shootClip);
 
-            //Get Direction Vector from Player Position
-            Vector2 shootDir = player.transform.position - gun.transform.position;
-            //Either AddForce or set Velocity
-            rbProjectile.velocity = shootDir.normalized * projectile.Speed;
-            yield return new WaitForSeconds(firingRate);
+                //Get RB of Projectile
+                Rigidbody2D rbProjectile = projectile.GetComponent<Rigidbody2D>();
+
+                //Get Direction Vector from Player Position
+                Vector2 shootDir = player.transform.position - gun.transform.position;
+                //Either AddForce or set Velocity
+                rbProjectile.velocity = shootDir.normalized * projectile.Speed;
+                yield return new WaitForSeconds(firingRate);
+            }
         }
     }
 

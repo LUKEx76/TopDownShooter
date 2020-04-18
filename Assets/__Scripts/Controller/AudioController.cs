@@ -2,17 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class AudioController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private AudioSource audioSource;
+
+    private GameController gameController;
+
+
     void Start()
     {
-        
+        gameController = FindObjectOfType<GameController>();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.mute = gameController.Muted;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        audioSource.mute = gameController.Muted;
+    }
+
+
+    public void PlayOneShot(AudioClip clip)
+    {
+        if (clip)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }
