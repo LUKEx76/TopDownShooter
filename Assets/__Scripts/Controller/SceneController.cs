@@ -58,7 +58,6 @@ public class SceneController : MonoBehaviour
 
     public void LoadShop()
     {
-        gameController.PauseGame();
         SceneManager.LoadSceneAsync(SceneNames.SHOP, LoadSceneMode.Additive);
     }
 

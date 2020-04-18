@@ -230,6 +230,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            PauseGame();
             sceneController.LoadShop();
         }
     }
